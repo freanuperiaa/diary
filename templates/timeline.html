@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+        <h2>Your Timeline</h2>
+
+        {% for item in object_list %}
+            <div>
+                {{ item.title }}<br>
+                {{ item.author }}<br>
+                {{ item.pub_date }}<br>
+                {{ item.id }}<br>
+                {{ item.content }}<br>
+            </div><br><br><br>
+
+        {% endfor %}
+
+    {% else %}
+        You are not logged in.
+
+    {% endif %}
+
+
+
+{% endblock content %}

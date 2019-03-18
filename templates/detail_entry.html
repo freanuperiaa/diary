@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    {% if user.is_authenticated %}
+        {% if object %}
+            {{ object.title }}<br>
+            {{ object.author }}<br>
+            {{ object.content }}<br>
+            {{ object.pub_date }}<br>
+            {% for item in tags %}
+                {{item}}
+            {% endfor %}
+        {% else %}
+            This is someone else's post.
+        {% endif %}
+
+    {% else %}
+        Oops! You are not logged in.
+
+    {% endif %}
+
+{% endblock content %}

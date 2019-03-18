@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <h2>Profile</h2><br><br>
+        <h3>{{ user.first_name }} {{ user.last_name }}</h3><br><br>
+        <h3> {{ user.gender }}, {{ user.age }}, {{ user.country }}  </h3> <br><br>
+        <p> {{ user.about }} </p>
+        <h4> {{ user.memory }} </h4>
+
+    {% else %}
+        You are not logged in.
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h3>Hi, {{ user.first_name }}</h3>
+        <h>The time today is {enter time here}</h>
+
+        <div class="container">
+            <!--    This should all be in a navbar!!    -->
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="{% url 'addentry' %}">Add entry</a></li>
+                <li><a href="{% url 'timeline' %}">Timeline</a></li>
+                <li><a href="{% url 'archive' %}">Archive</a></li>
+                <li><a href="{% url 'profile' %}">My profile</a></li>
+
+
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+
+
+        </div>
+    {% else %}
+        <p>You are not logged in.</p>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'signup' %}">Signup</a>
+    {% endif %}
+
+{% endblock content %}

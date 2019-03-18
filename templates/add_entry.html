@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Add a Diary Entry.</h3>    
+    {% if user.is_authenticated %}
+        <div class="form-div">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="post!">
+            </form>
+        </div>
+    {% else %}
+
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,61 @@
+This project is going to serve as a Memory Trainer in form of a Diary Web App.
+
+Every evening, a user shall write to the Diary
+then every morning, the user should be shown his diary entries in the last
+five days.
+
+main page - link/button to write about his day
+timeline - shows the diary entries within the last five days
+archive - this is where the user can see all the records by years/months/days
+
+!!!!!!!!!!!!
+note that at the beginning, the records are just plain text
+    -- but it will be improved step by step
+!!!!!!!!!!!!
+
+
+For me, I think a user should also have a profile page
+    - it should show the number of entries he has written
+    - it should show his progress in memory?
+    - show info about self lol (something like 'About me')
+
+-Create a User Model (done!)
+    - should have the basics such as age, gender, etc.
+    - should have the things related to the goal of the Diary App (to improve memory)
+        .something like "confidence in my memory"
+                        "about me" etc
+
+
+APP CONTENTS!!!
+
+- home page
+        - should be something like, "welcome, {{user.first_name}}!"
+                                    " you have {{num}} number of entries"
+                                    "date today is blah"
+                                    "click here to add entry"
+        - if not logged in, should have "you are not logged in. click here to log in"
+
+- Add diary entry   
+        - usual django-crispy-forms form
+        - should only be accessed by authenticated users
+
+- timeline
+        - ListView of the last five diary entries of the user
+                - every entry should be shown in detail
+
+- Archive
+        - ListView of all the diary entries of the user.
+         (should also have filter by category, this ill learn yet)
+
+- My Profile
+        - has info of the user. should also have the number of posts
+
+
+
+Freanu's notes:
+1.) Sir, I think you'll notice that in the views.py file, it looks very messy 
+        I did my best in order for it to work, it's all a result of googling
+        things and trying to fix things by my own logic. This is all caused by
+        the manytomanyfield that I included in the model. I'm sure that it's 
+        kind of wrong and that there's a better way for it to be done; I hope 
+        that you'll guide me on this.
