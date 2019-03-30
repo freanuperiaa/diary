@@ -4,26 +4,50 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h3>Hi, {{ user.first_name }}</h3>
-        <h>The time today is {enter time here}</h>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card-welcome">
+                        <h3>Hi, {{ user.first_name }}.</h3><br><br>
+                        <h4>You have made <em>{{number}}</em> diary entries.</h4><br><br>
+                        <h4>memory: {{ user.memory }}</h4>
 
-        <div class="container">
-            <!--    This should all be in a navbar!!    -->
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="{% url 'addentry' %}">Add entry</a></li>
-                <li><a href="{% url 'timeline' %}">Timeline</a></li>
-                <li><a href="{% url 'archive' %}">Archive</a></li>
-                <li><a href="{% url 'profile' %}">My profile</a></li>
+                </div>    
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-7 card-timeline">
+                <h2>Your Timeline.</h2>
 
+                <ul>
+                    {% for item in object_list %}
+                        
+                        <article class="media content-section">
+                                <div class="media-body">
+                                <div class="article-metadata">
+                                    <small class="text-muted">{{ item.pub_date|date:"F d, Y" }}</small>
+                                </div>
+                                <h2><a class="article-title" href="{% url 'entry' item.id %}">{{ item.title }}</a></h2>
+                                <p class="article-content">{{ item.content }}</p>
+                                </div>
+                        </article>
+    
+                    {% endfor %}
+                </ul>
 
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-            </ul>
-
-
+            </div>
         </div>
+            
+
     {% else %}
-        <p>You are not logged in.</p>
+        <div class="jumbotron unauth-jumb">
+            <h1 class="display-4">Welcome!</h1>
+            <p class="lead">This is a simple diary app that lets you add diary entries in order for you to improve your memory.</p>
+            <hr class="my-4">
+            <p>Start now!</p>
+            <p class="lead">
+              <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Login</a>
+              <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Signup</a>
+            </p>
+          </div>
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'signup' %}">Signup</a>
     {% endif %}

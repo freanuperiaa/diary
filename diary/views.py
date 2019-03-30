@@ -9,8 +9,22 @@ from django.views.generic.edit import FormView
 from .forms import EntryForm
 # Create your views here.
 
-class HomePageView(TemplateView):
+class HomePageView(ListView):
     template_name = 'home.html'
+
+    def get_queryset(self):
+        queryset = None
+        if self.request.user.is_authenticated:
+            queryset = Post.objects.filter(author =
+            self.request.user).order_by('-id')[:5]
+        return queryset
+        
+    def get_context_data(self, **kwargs):
+        context = super(). get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['number'] = Post.objects.filter(author=self.request.user).count()
+        return context
+
 
 
 class EntryCreateView(FormView):
@@ -31,6 +45,19 @@ class EntryCreateView(FormView):
                     author = new_author, content = new_content
         )
         new_post.save()
+
+        #add tags that are not in the database
+        if form.cleaned_data['more_tags']:
+            unsaved_tags = form.cleaned_data['more_tags']
+            unsaved_tags.replace(' ','')
+            list_tags = unsaved_tags.split(',')
+            tags_in_db = Tag.objects.all()
+            for item in list_tags:
+                if item not in tags_in_db:
+                    new_tag = Tag(title = item)
+                    new_tag.save()
+                    new_post.tags.add(new_tag)
+            
         tags_list = Tag.objects.filter(pk__in=tags)
         for item in tags_list:
             new_post.tags.add(item)
@@ -55,13 +82,13 @@ class EntryDetailView(DetailView):
         return context
 
 
-class TimelineView(ListView):
-    template_name = 'timeline.html'
+# class TimelineView(ListView):
+#     template_name = 'timeline.html'
     
-    def get_queryset(self):
-        queryset = Post.objects.filter(author =
-        self.request.user).order_by('-id')[:5]
-        return queryset
+#     def get_queryset(self):
+#         queryset = Post.objects.filter(author =
+#         self.request.user).order_by('-id')[:5]
+#         return queryset
 
 
 class ArchiveView(ListView):

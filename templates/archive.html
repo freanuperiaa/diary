@@ -3,18 +3,25 @@
 {% block content %}
 
     {% if user.is_authenticated %}
-
-        <h2>Archive of your Diary entries.</h2>
-        {% for item in object_list %}
-            <div>
-                {{ item.title }}<br>
-                {{ item.author }}<br>
-                {{ item.pub_date }}<br>
-                {{ item.id }}<br>
-                {{ item.content }}<br>
-            </div><br><br><br>
-
-        {% endfor %}
+        <div class="row">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                        <h5 class="card-title text-center">Archive of your diary entries.</h5>
+                        {% for item in object_list %}
+                            <article class="media content-section">
+                                <div class="media-body">
+                                <div class="article-metadata">
+                                    <small class="text-muted">{{ item.pub_date|date:"F d, Y" }}</small>
+                                </div>
+                                <h2><a class="article-title" href="{% url 'entry' item.id %}">{{ item.title }}</a></h2>
+                                <p class="article-content">{{ item.content }}</p>
+                                </div>
+                            </article>
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+        
 
     {% else %}
         You are not logged in.

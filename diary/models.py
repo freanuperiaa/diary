@@ -19,7 +19,7 @@ class Post(models.Model):
         on_delete = models.CASCADE,
     )
     pub_date = models.DateField('date published')
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True)
     content = models.TextField()
 
     def __str__(self):
