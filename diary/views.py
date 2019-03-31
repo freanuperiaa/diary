@@ -6,7 +6,7 @@ from .models import Post, Tag
 from users.models import CustomUser
 from django.views.generic import  DetailView, ListView, TemplateView
 from django.views.generic.edit import FormView
-from .forms import EntryForm
+from .forms import EntryForm, EntryModelForm
 # Create your views here.
 
 class HomePageView(ListView):
@@ -29,39 +29,63 @@ class HomePageView(ListView):
 
 class EntryCreateView(FormView):
     template_name = 'add_entry.html'
-    form_class = EntryForm
+    #form_class = EntryForm
 
+    # def form_valid(self, form):
+    #     #this is what I was talking about in Freanu's notes, sir.
+    #     #I couldn't find another way for doing this. Perhaps there's
+    #     #another way to do this that I do not know - yet.
+    #     new_title = form.cleaned_data['title']
+    #     new_pub_date = timezone.now()
+    #     new_author = self.request.user
+    #     new_content = form.cleaned_data['content']
+    #     tags = form.cleaned_data['tags']
+    #     new_post = Post(
+    #         title = new_title, pub_date = new_pub_date,
+    #                 author = new_author, content = new_content
+    #     )
+    #     new_post.save()
+
+    #     #add tags that are not in the database
+    #     if form.cleaned_data['more_tags']:
+    #         unsaved_tags = form.cleaned_data['more_tags']
+    #         unsaved_tags.replace(' ','')
+    #         list_tags = unsaved_tags.split(',')
+    #         tags_in_db = Tag.objects.all()
+    #         for item in list_tags:
+    #             if item not in tags_in_db:
+    #                 new_tag = Tag(title = item)
+    #                 new_tag.save()
+    #                 new_post.tags.add(new_tag)
+            
+    #     tags_list = Tag.objects.filter(pk__in=tags)
+    #     for item in tags_list:
+    #         new_post.tags.add(item)
+    #     return redirect(new_post.get_absolute_url())
+    
+
+    #changed method since the form is changed to ModelForm
+    form_class = EntryModelForm
     def form_valid(self, form):
-        #this is what I was talking about in Freanu's notes, sir.
-        #I couldn't find another way for doing this. Perhaps there's
-        #another way to do this that I do not know - yet.
         new_title = form.cleaned_data['title']
         new_pub_date = timezone.now()
         new_author = self.request.user
         new_content = form.cleaned_data['content']
-        tags = form.cleaned_data['tags']
+        new_tags = form.cleaned_data['tags']
         new_post = Post(
-            title = new_title, pub_date = new_pub_date,
-                    author = new_author, content = new_content
+            title = new_title,
+            pub_date = new_pub_date,
+            author = new_author,
+            content = new_content,
         )
         new_post.save()
 
-        #add tags that are not in the database
-        if form.cleaned_data['more_tags']:
-            unsaved_tags = form.cleaned_data['more_tags']
-            unsaved_tags.replace(' ','')
-            list_tags = unsaved_tags.split(',')
-            tags_in_db = Tag.objects.all()
-            for item in list_tags:
-                if item not in tags_in_db:
-                    new_tag = Tag(title = item)
-                    new_tag.save()
-                    new_post.tags.add(new_tag)
-            
-        tags_list = Tag.objects.filter(pk__in=tags)
-        for item in tags_list:
-            new_post.tags.add(item)
+        tags = Tag.objects.filter(pk__in=new_tags)
+        for tag in tags:
+            new_post.tags.add(tag)
+
         return redirect(new_post.get_absolute_url())
+
 
 
 class EntryDetailView(DetailView):
