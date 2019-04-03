@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-
-#these are choices for the users of the app
 GENDER = (
         ('M','male'),
         ('F','female'),
@@ -18,6 +16,7 @@ MEM_LEVEL = (
         ('GMEM', 'Good Memory'),
         ('EMEM', 'Perfect/Eidetic Memory')
 )
+
 
 class CustomUser(AbstractUser):
     age = models.PositiveIntegerField(default = 0)

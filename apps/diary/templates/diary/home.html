@@ -10,13 +10,11 @@
                         <h3>Hi, {{ user.first_name }}.</h3><br><br>
                         <h4>You have made <em>{{number}}</em> diary entries.</h4><br><br>
                         <h4>memory: {{ user.memory }}</h4>
-
                 </div>    
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-7 card-timeline">
                 <h2>Your Timeline.</h2>
-
                 <ul>
                     {% for item in object_list %}
                         
@@ -29,14 +27,10 @@
                                 <p class="article-content">{{ item.content }}</p>
                                 </div>
                         </article>
-    
                     {% endfor %}
                 </ul>
-
             </div>
         </div>
-            
-
     {% else %}
         <div class="jumbotron unauth-jumb">
             <h1 class="display-4">Welcome!</h1>
