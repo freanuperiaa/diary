@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse_lazy
 from django.utils import timezone
 
 
@@ -66,25 +67,42 @@ class EntryCreateView(FormView):
 
     #changed method since the form is changed to ModelForm
     form_class = EntryModelForm
-    def form_valid(self, form):
-        new_title = form.cleaned_data['title']
-        new_pub_date = timezone.now()
-        new_author = self.request.user
-        new_content = form.cleaned_data['content']
-        new_tags = form.cleaned_data['tags']
-        new_post = Post(
-            title = new_title,
-            pub_date = new_pub_date,
-            author = new_author,
-            content = new_content,
-        )
-        new_post.save()
+    # def form_valid(self, form):
+    #     new_title = form.cleaned_data['title']
+    #     new_pub_date = timezone.now()
+    #     new_author = self.request.user
+    #     new_content = form.cleaned_data['content']
+    #     new_tags = form.cleaned_data['tags']
+    #     new_post = Post(
+    #         title = new_title,
+    #         pub_date = new_pub_date,
+    #         author = new_author,
+    #         content = new_content,
+    #     )
+    #     new_post.save()
 
+    #     tags = Tag.objects.filter(pk__in=new_tags)
+    #     for tag in tags:
+    #         new_post.tags.add(tag)
+
+    #     return redirect(new_post.get_absolute_url())
+
+    #this change is based on the comment you made on my PR, I was just able
+    #to understand it now
+    success_url = reverse_lazy('home')
+    def form_valid(self, form):
+        new_post = form.save(commit=False)
+        new_post.author = self.request.user
+        new_post.pub_date = timezone.now()
+        new_post.save()
+        
+        #the tags can not be arbitrarily assigned to the new_post object
+        #since it is a foreignkey to another table
+        new_tags = form.cleaned_data['tags']
         tags = Tag.objects.filter(pk__in=new_tags)
         for tag in tags:
             new_post.tags.add(tag)
-
-        return redirect(new_post.get_absolute_url())
+        return redirect(self.get_success_url())
 
 
 

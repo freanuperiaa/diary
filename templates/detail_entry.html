@@ -27,7 +27,18 @@
                 <div class="col-md-4"></div>
             </div>
         {% else %}
-            This is someone else's post.
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="card card-signin my-5">
+                        <div class="card-body">
+                            <h2 class="font-weight-bold">Hold it right there!</h2>
+                            <h4 class="text-danger">This is someone else's diary entry.</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
         {% endif %}
 
     {% else %}
