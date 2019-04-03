@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic import DetailView
@@ -14,7 +13,7 @@ class SignUp(CreateView):
 
 class ProfileView(DetailView):
     model = CustomUser
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
-        return context
+
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(username=
+                                          self.request.user.username)

@@ -5,7 +5,6 @@ from django.views.generic import  DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView
 
 from .models import Post
-from apps.users.models import CustomUser
 from .forms import EntryModelForm
 
 
