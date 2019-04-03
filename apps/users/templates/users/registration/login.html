@@ -1,0 +1,32 @@
+{% extends 'users/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="card card-signin my-5">
+            <div class="card-body">
+                <h5 class="card-title text-center">Log In</h5>
+                <form class="form-signin" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block text-uppercase"/>
+                  
+                </form>
+ 
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+
+{% endblock content %}
+
