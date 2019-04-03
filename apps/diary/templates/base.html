@@ -15,17 +15,17 @@
                       <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                      <a class="navbar-brand" href="{% url 'home' %}">Diary App!</a>
+                      <a class="navbar-brand" href="{% url 'diary:home' %}">Diary App!</a>
                       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                            <a class="nav-link" href="{% url 'diary:home' %}">Home</a>
                         </li>
                         {% if user.is_authenticated %}
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'addentry' %}">Add Entry</a>
+                          <a class="nav-link" href="{% url 'diary:add' %}">Add Entry</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'archive' %}">Archive</a>
+                            <a class="nav-link" href="{% url 'diary:archive' %}">Archive</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'profile' user.id %}">My Profile</a>
@@ -40,9 +40,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">My Profile</a>
                         </li>
+                        <li class="nav-item">
+                          <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>
                         {% endif %}
-                      </ul>
-                    
+                      </ul>             
                       <form class="form-inline ml-auto">
                             {% if user.is_authenticated %}
                             <a href="{% url 'logout' %}" class="btn btn-outline-secondary">Log out</a>

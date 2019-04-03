@@ -1,4 +1,4 @@
-{% extends 'diary/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
@@ -13,7 +13,7 @@
                                 <div class="article-metadata">
                                     <small class="text-muted">{{ item.pub_date|date:"F d, Y" }}</small>
                                 </div>
-                                <h2><a class="article-title" href="{% url 'entry' item.id %}">{{ item.title }}</a></h2>
+                                <h2><a class="article-title" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h2>
                                 <p class="article-content">{{ item.content }}</p>
                                 </div>
                             </article>

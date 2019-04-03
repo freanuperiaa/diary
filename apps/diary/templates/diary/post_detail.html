@@ -1,4 +1,4 @@
-{% extends 'diary/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     
@@ -9,7 +9,7 @@
                 <div class="col-md-4">
                     <div class="card card-signin my-5">
                         <div class="card-body">
-                            <h3 class="card-title text-center">{{object.title}}</h5>
+                            <h3 class="card-title text-center">{{object.title}}</h3>
                             <h4> by: {{ object.author }} </h4>
                             <h5>written on: {{ object.pub_date }} </h5>
                             <p>{{ object.content }}</p>
