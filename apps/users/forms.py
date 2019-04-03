@@ -14,7 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
             'memory', 'country',
             'about',
         )
-        
+
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser

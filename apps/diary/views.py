@@ -44,7 +44,6 @@ class EntryDetailView(DetailView):
         return super().get_queryset(*args, **kwargs).filter(author =
                        self.request.user)
 
-
 class ArchiveView(ListView):
     
     def get_queryset(self):
