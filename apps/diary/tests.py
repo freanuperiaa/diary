@@ -117,3 +117,47 @@ class ArchiveViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'diary/post_list.html')
 
+
+class DetailViewTest(TestCase):
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username='testuser', email='test@email.com',
+            password='secretpw', first_name='John',
+            last_name='Doe'
+        )
+        self.client.force_login(self.user)
+        self.client.post(reverse('diary:add'), {
+            'title': 'Test Title',
+            'author': self.user,
+            'content': 'Loren ipsum'
+        })
+        self.client.logout()
+        self.user2 = get_user_model().objects.create_user(
+            username='testuser2', email='test2@email.com',
+            password='secretpw', first_name='John',
+            last_name='Doe'
+        )
+        self.client.force_login(self.user2)
+        self.client.post(reverse('diary:add'), {
+            'title': 'Test Title',
+            'author': self.user,
+            'content': 'Loren ipsum'
+        })
+        self.client.logout()
+
+    def test_view_url_exists_at_proper_location(self):
+        self.client.force_login(self.user)
+        response = self.client.get('/post/1/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        self.client.force_login(self.user)
+        response = self.client.get('/post/1/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'diary/post_detail.html')
+
+    def test_cannot_view_others_post(self):
+        self.client.force_login(self.user2)
+        response = self.client.get('/post/1/')
+        self.assertEqual(response.status_code, 404)
