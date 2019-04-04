@@ -39,11 +39,11 @@
             <p>Start now!</p>
             <p class="lead">
               <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Login</a>
-              <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Signup</a>
+              <a class="btn btn-primary btn-lg" href="{% url 'users:signup' %}" role="button">Signup</a>
             </p>
           </div>
         <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'signup' %}">Signup</a>
+        <a href="{% url 'users:signup' %}">Signup</a>
     {% endif %}
 
 {% endblock content %}

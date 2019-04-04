@@ -5,7 +5,7 @@ from django.shortcuts import reverse
 class Post(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
-    pub_date = models.DateField('date published')
+    pub_date = models.DateField(auto_now_add=True)
     content = models.TextField()
 
     objects = models.Manager()

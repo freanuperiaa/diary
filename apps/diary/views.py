@@ -1,5 +1,4 @@
 from django.shortcuts import redirect
-from django.utils import timezone
 from django.views.generic import  DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView
 
@@ -26,7 +25,6 @@ class PostCreateView(CreateView):
     def form_valid(self, form):
         new_post = form.save(commit=False)
         new_post.author = self.request.user
-        new_post.pub_date = timezone.now()
         new_post.save()
         return redirect(new_post.get_absolute_url())
 

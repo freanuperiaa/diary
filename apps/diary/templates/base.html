@@ -28,7 +28,7 @@
                             <a class="nav-link" href="{% url 'diary:archive' %}">Archive</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'profile' user.id %}">My Profile</a>
+                            <a class="nav-link" href="{% url 'users:profile' user.id %}">My Profile</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
