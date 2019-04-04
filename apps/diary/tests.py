@@ -116,3 +116,4 @@ class ArchiveViewTest(TestCase):
         response = self.client.get('/archive/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'diary/post_list.html')
+
