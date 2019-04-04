@@ -55,4 +55,3 @@ class ProfileViewTest(TestCase):
         response2 = self.client.get('/users/profile/2/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response2.status_code, 404)
-        
