@@ -25,4 +25,3 @@ class CustomUserChangeForm(UserChangeForm):
             'memory', 'country',
             'about',
         )
-        

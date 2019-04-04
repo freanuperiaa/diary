@@ -13,6 +13,11 @@
                             <h4> by: {{ object.author }} </h4>
                             <h5>written on: {{ object.pub_date }} </h5>
                             <p>{{ object.content }}</p>
+                            <br><br><br>
+                            <form action="{% url 'diary:update' object.id %}" method="get">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block ">edit this...</button>
+                            </form>
+
                             <br><br>
                         </div>
                     </div>
@@ -35,7 +40,5 @@
         {% endif %}
     {% else %}
         Oops! You are not logged in.
-
     {% endif %}
 {% endblock content %}
-

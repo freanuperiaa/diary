@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from django.views.generic import  DetailView, ListView, TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Post
 
@@ -40,3 +40,8 @@ class ArchiveView(ListView):
     
     def get_queryset(self):
         return Post.objects.filter(author=self.request.user).order_by('-id')
+
+
+class PostUpdateView(UpdateView):
+    model = Post
+    fields = ['title', 'content']
