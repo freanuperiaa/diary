@@ -37,20 +37,18 @@ class ProfileViewTest(TestCase):
             password='secretpw', first_name='Maria',
             last_name='Doe'
         )
+        self.client.force_login(self.user)
 
     def test_view_url_exists_at_proper_location(self):
-        self.client.force_login(self.user)
         response = self.client.get('/users/profile/1/', follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
-        self.client.force_login(self.user)
         response = self.client.get('/users/profile/1/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'users/customuser_detail.html')
 
     def test_user_cannot_view_others_profile(self):
-        self.client.force_login(self.user)
         response = self.client.get('/users/profile/1/', follow=True)
         response2 = self.client.get('/users/profile/2/')
         self.assertEqual(response.status_code, 200)

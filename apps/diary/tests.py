@@ -19,6 +19,7 @@ class PostModelTest(TestCase):
             content='Loren ipsum dolor sit amet',
             author=self.user,
         )
+        self.client.force_login(self.user)
 
     def test_string_representation(self):
         post = Post(title='Test Title')
@@ -33,14 +34,12 @@ class PostModelTest(TestCase):
         self.assertEqual(f'{self.post.content}', 'Loren ipsum dolor sit amet')
 
     def test_post_list_view(self):
-        self.client.force_login(self.user)
         response = self.client.get(reverse('diary:archive'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Loren ipsum dolor sit amet')
         self.assertTemplateUsed(response, 'diary/post_list.html')
 
     def test_post_detail_view(self):
-        self.client.force_login(self.user)
         response = self.client.get('/post/1/')
         no_response = self.client.get('/post/99999999/')
         self.assertEqual(response.status_code, 200)
@@ -49,7 +48,6 @@ class PostModelTest(TestCase):
         self.assertTemplateUsed(response, 'diary/post_detail.html')
 
     def test_post_create_view(self):
-        self.client.force_login(self.user)
         response = self.client.post(reverse('diary:add'), {
             'title': 'Test Title',
             'author': self.user,
@@ -100,19 +98,17 @@ class ArchiveViewTest(TestCase):
             password='secretpw', first_name='John',
             last_name='Doe'
         )
+        self.client.force_login(self.user)
 
     def test_view_url_exists_at_proper_location(self):
-        self.client.force_login(self.user)
         response = self.client.get('/archive/')
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_by_name(self):
-        self.client.force_login(self.user)
         response = self.client.get(reverse('diary:archive'))
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
-        self.client.force_login(self.user)
         response = self.client.get('/archive/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'diary/post_list.html')
@@ -145,19 +141,19 @@ class DetailViewTest(TestCase):
             'content': 'Loren ipsum'
         })
         self.client.logout()
+        self.client.force_login(self.user)
 
     def test_view_url_exists_at_proper_location(self):
-        self.client.force_login(self.user)
         response = self.client.get('/post/1/')
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
-        self.client.force_login(self.user)
         response = self.client.get('/post/1/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'diary/post_detail.html')
 
     def test_cannot_view_others_post(self):
+        self.client.logout()
         self.client.force_login(self.user2)
         response = self.client.get('/post/1/')
         self.assertEqual(response.status_code, 404)
